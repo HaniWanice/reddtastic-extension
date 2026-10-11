@@ -1,51 +1,87 @@
-# Reddtastic Diaporama
+<h1 align="center">Reddtastic Slideshow</h1>
 
-Extension Edge/Chrome : diaporama plein écran à défilement automatique sur reddtastic.com (pages `/r/…` et `/u/…`), avec tableau de bord des favoris.
-Sur reddit.com (avec ou sans compte), des boutons ouvrent la même page sur Reddtastic.
+<p align="center">
+  <b>A fullscreen, auto-advancing slideshow for Reddit — a browser extension for Chrome and Edge.</b><br>
+  Watch any subreddit or user's photos, videos and galleries hands-free, and keep your favorites in one dashboard.
+</p>
 
-## Installation
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <img alt="Manifest V3" src="https://img.shields.io/badge/manifest-v3-green">
+  <img alt="Chrome" src="https://img.shields.io/badge/Chrome-supported-4285F4?logo=googlechrome&logoColor=white">
+  <img alt="Edge" src="https://img.shields.io/badge/Edge-supported-0078D7?logo=microsoftedge&logoColor=white">
+  <a href="https://github.com/HaniWanice/reddtastic-extension/issues"><img alt="Issues" src="https://img.shields.io/github/issues/HaniWanice/reddtastic-extension"></a>
+</p>
 
-1. Ouvrir `edge://extensions` (ou `chrome://extensions`).
-2. Activer le « Mode développeur ».
-3. « Charger l'extension non empaquetée » et choisir ce dossier.
-4. Après une modification du code : bouton « Recharger » de l'extension, puis recharger l'onglet.
+<p align="center">
+  <img src="docs/media/slideshow.png" alt="Fullscreen slideshow of r/MostBeautiful" width="800">
+</p>
 
-## Utilisation
+<p align="center"><a href="README.fr.md">Version française</a></p>
 
-En bas à droite : **Favoris** et **Diaporama**. Le diaporama suit le subreddit et le tri (`?sort=`, `&t=`) de la page.
-En haut à gauche du diaporama : `u/auteur` et `r/subreddit` ouvrent leur propre diaporama dans un nouvel onglet ; « Voir sur Reddit » ouvre le post sur reddit.com.
+## Features
 
-Sur reddit.com, en bas à gauche : **Favoris** et **Diaporama** (sous-reddit ou utilisateur affiché, tri compris ; fonctionne aussi depuis les pages de connexion et d'avertissement adulte grâce à leur paramètre `dest`).
+- **Fullscreen slideshow** of any subreddit (`/r/…`) or user (`/u/…`) on [reddtastic.com](https://reddtastic.com), following the page's sort (`Hot`, `Top · week`…).
+- **Photos, videos and galleries** in the best available quality: original image files, highest-quality video stream, with sound.
+- **Favorites dashboard** with daily previews, collections, drag-and-drop and filters.
+- **One click from reddit.com**: buttons on any subreddit or user page open the same page as a slideshow.
+- **Keyboard first**: every action has a shortcut.
+- **Private by design**: no server, no tracking, no analytics. See the [privacy policy](PRIVACY.md).
 
-| Touche | Action |
+| Favorites dashboard | One-click launcher |
 |---|---|
-| ← / → | précédent / suivant |
-| espace | pause / lecture |
-| m | son coupé / rétabli |
-| ↑ / ↓ | volume (aussi : molette ou curseur au survol du bouton son) |
-| r | voir le post sur Reddit |
-| u | petites photos agrandies / taille réelle |
-| h | masquer / afficher les contrôles (masqués : réapparaissent au survol) |
-| s | ajouter / retirer des favoris |
-| f | plein écran |
-| Échap | fermer |
+| ![Favorites dashboard with collections](docs/media/favorites.png) | ![Favorites and Slideshow buttons on a reddtastic.com page](docs/media/page-launcher.png) |
 
-Volume mémorisé. Le curseur est linéaire mais le volume suit sa position au cube : la moitié du curseur = 12,5 %, ce qui donne de la précision dans les sons bas.
+> The interface is in French for now. An English interface is on the way ([help welcome](https://github.com/HaniWanice/reddtastic-extension/issues)).
 
-Durée réglable dans la barre. Une vidéo est lue jusqu'au bout ; si elle dure moins que la durée réglée, elle est rejouée jusqu'à l'atteindre.
+## Install
 
-## Favoris (`reddtastic.com/#favoris`)
+Chrome Web Store and Edge Add-ons listings are coming soon. Until then, install it manually in under a minute:
 
-- Un favori = une page + son tri (`r/photo` Hot et `r/photo` Top · semaine sont deux favoris).
-- Aperçu renouvelé une fois par jour : meilleur post du jour du subreddit, dernier post de l'utilisateur.
-- Collections : créer, renommer (cliquer sur le nom), monter / descendre, supprimer. Ranger les favoris par glisser-déposer, par les flèches ou par le menu de chaque favori.
-- Filtres Tous / Subreddits / Utilisateurs. Suppression annulable quelques secondes.
-- Sauvegarde triple : `chrome.storage.local` + cookies `rdp_favs0…7` sur reddtastic.com + `chrome.storage.sync` (compte Edge, si la synchro est active). Si une copie disparaît, les autres la reconstruisent au prochain chargement.
+1. [Download the ZIP](https://github.com/HaniWanice/reddtastic-extension/archive/refs/heads/main.zip) and unzip it.
+2. Open `chrome://extensions` (or `edge://extensions`).
+3. Turn on **Developer mode**.
+4. Click **Load unpacked** and pick the unzipped folder.
 
-## Fichiers
+## Usage
 
-- `media.js` : post de l'API → médias et aperçu. `favs.js` : favoris, cookie, aperçus du jour.
-- `content.js` : diaporama et lanceur. `home.js` : tableau de bord. `icons.js` : icônes SVG.
-- `vendor/hls.min.js` : hls.js 1.7.3 (Apache-2.0), nécessaire pour le son des vidéos Reddit.
-- `volume.js` : courbe du curseur de volume. `reddit.js` : boutons sur reddit.com.
-- Tests : `node test/media.test.js && node test/favs.test.js && node test/reddit.test.js`.
+Open a subreddit or user page on reddtastic.com, or on reddit.com, then click **Diaporama** (slideshow) in the bottom corner. **Favoris** opens your favorites dashboard (`reddtastic.com/#favoris`).
+
+| Key | Action |
+|---|---|
+| ← / → | previous / next |
+| Space | pause / play |
+| M | mute / unmute |
+| ↑ / ↓ | volume (also mouse wheel, or the slider when hovering the sound button) |
+| R | open the post on Reddit |
+| U | upscale small photos / actual size |
+| H | hide / show controls |
+| S | add to / remove from favorites |
+| F | fullscreen |
+| Esc | close |
+
+Slide duration is adjustable in the toolbar. Videos always play to the end; short videos loop until the slide duration is reached.
+
+## Contributing
+
+Bug reports, ideas and pull requests are welcome.
+
+- **Found a bug?** [Open an issue](https://github.com/HaniWanice/reddtastic-extension/issues/new) with the page URL and what you expected.
+- **Want to code?** No build step: edit the files, then click **Reload** on the extension and refresh the tab.
+- **Tests:** `node test/media.test.js && node test/favs.test.js && node test/reddit.test.js`
+
+| File | Role |
+|---|---|
+| `content.js` | slideshow and launcher |
+| `home.js` | favorites dashboard |
+| `favs.js` | favorites storage, backups, daily previews |
+| `media.js` | Reddit post → media list |
+| `reddit.js` | buttons on reddit.com |
+| `volume.js`, `icons.js` | volume curve, SVG icons |
+| `vendor/hls.min.js` | [hls.js](https://github.com/video-dev/hls.js) 1.7.3 (Apache-2.0), for Reddit video sound |
+
+## License
+
+[MIT](LICENSE). hls.js is under the [Apache-2.0 license](vendor/LICENSE-hls.js).
+
+This is an unofficial extension. It is not affiliated with Reddit, Inc. or with reddtastic.com.
