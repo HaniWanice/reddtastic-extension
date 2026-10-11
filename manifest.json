@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Reddtastic Diaporama",
+  "version": "0.4.0",
+  "description": "Diaporama plein écran à défilement automatique pour reddtastic.com",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://reddtastic.com/*",
+        "https://www.reddtastic.com/*"
+      ],
+      "js": [
+        "vendor/hls.min.js",
+        "icons.js",
+        "media.js",
+        "volume.js",
+        "favs.js",
+        "content.js",
+        "home.js"
+      ],
+      "css": [
+        "slideshow.css",
+        "home.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.reddit.com/*"
+      ],
+      "js": [
+        "icons.js",
+        "reddit.js"
+      ],
+      "css": [
+        "slideshow.css"
+      ]
+    }
+  ]
+}

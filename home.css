@@ -1,0 +1,176 @@
+/* Tableau de bord des favoris. Jetons définis dans slideshow.css. */
+#rdh {
+  position: fixed; inset: 0; z-index: 2147483647; overflow-y: auto;
+  background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.45;
+  scrollbar-color: var(--line) transparent;
+  animation: rdh-in .24s var(--ease);
+}
+@keyframes rdh-in { from { opacity: 0; transform: translateY(6px); } }
+#rdh button, #rdh select, #rdh input { font: inherit; color: inherit; }
+#rdh kbd {
+  padding: 1px 6px; border: 1px solid var(--line); border-radius: 6px;
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.4; color: var(--text);
+}
+
+#rdh .rdh-top {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; gap: 28px; padding: 18px 40px;
+  background: rgb(0 0 0 / .8); backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom: 1px solid rgb(255 255 255 / .07);
+}
+#rdh h1 { margin: 0; font-size: 26px; font-weight: 650; letter-spacing: -0.022em; }
+
+#rdh .rdh-tabs { display: flex; gap: 2px; padding: 3px; background: var(--surface); border-radius: 12px; }
+#rdh .rdh-tabs button {
+  display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px;
+  border: 0; border-radius: 9px; background: none; color: var(--muted); font-size: 14px; font-weight: 550; cursor: pointer;
+  transition: background-color .15s var(--ease), color .15s var(--ease);
+}
+#rdh .rdh-tabs button:hover { color: var(--text); }
+#rdh .rdh-tabs button[aria-selected="true"] { background: var(--raised-hover); color: var(--text); }
+#rdh .rdh-c { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+#rdh .rdh-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+#rdh .rdh-btn {
+  display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 11px;
+  border: 0; border-radius: 10px; background: var(--raised); font-size: 14px; font-weight: 550; cursor: pointer;
+  transition: background-color .15s var(--ease);
+}
+#rdh .rdh-btn:hover { background: var(--raised-hover); }
+#rdh .rdh-btn .rdi { width: 18px; height: 18px; color: var(--muted); }
+#rdh .rdh-icon {
+  display: grid; place-items: center; width: 36px; height: 36px;
+  border: 0; border-radius: 10px; background: none; color: var(--muted); cursor: pointer;
+  transition: background-color .15s var(--ease), color .15s var(--ease);
+}
+#rdh .rdh-icon:hover { background: var(--raised); color: var(--text); }
+
+#rdh .rdh-body { padding: 28px 40px 96px; }
+#rdh .rdh-sec + .rdh-sec { margin-top: 48px; }
+#rdh .rdh-sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+#rdh .rdh-sec-head h2, #rdh .rdh-gname { margin: 0; font-size: 19px; font-weight: 650; letter-spacing: -0.015em; }
+#rdh .rdh-gname {
+  field-sizing: content; min-width: 4ch; max-width: 60ch; height: 34px; padding: 0 8px; margin-left: -9px;
+  border: 1px solid transparent; border-radius: 8px; background: none;
+  transition: border-color .15s var(--ease), background-color .15s var(--ease);
+}
+#rdh .rdh-gname:hover { border-color: var(--line); }
+#rdh .rdh-gname:focus { background: var(--surface); border-color: var(--accent); outline: none; }
+#rdh .rdh-n { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+#rdh .rdh-gtools { display: flex; gap: 2px; opacity: 0; transition: opacity .15s var(--ease); }
+#rdh .rdh-gtools .rdh-icon { width: 32px; height: 32px; }
+#rdh .rdh-sec-head:hover .rdh-gtools, #rdh .rdh-gtools:focus-within { opacity: 1; }
+#rdh .rdh-icon:disabled { opacity: .3; cursor: default; background: none; color: var(--muted); }
+#rdh .rdh-del:hover { color: var(--danger); }
+
+#rdh .rdh-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;
+  border-radius: 16px; transition: box-shadow .15s var(--ease);
+}
+#rdh .drop-into .rdh-grid { box-shadow: 0 0 0 2px var(--accent), 0 0 0 10px rgb(158 158 255 / .08); }
+#rdh .rdh-hint {
+  grid-column: 1 / -1; margin: 0; padding: 30px 20px; text-align: center; color: var(--muted);
+  border: 1px dashed var(--line); border-radius: 14px;
+}
+
+#rdh .rdh-tile {
+  position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden;
+  background: var(--surface); box-shadow: 0 6px 20px rgb(0 0 0 / .35);
+  transition: opacity .15s var(--ease), transform .18s var(--ease);
+}
+#rdh .rdh-tile.is-dragging { opacity: .35; }
+/* Indicateur d'insertion pendant le glisser-déposer. */
+#rdh .rdh-tile.drop-before, #rdh .rdh-tile.drop-after { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* La tuile cible s'écarte du côté où l'élément sera inséré. */
+#rdh .rdh-tile.drop-before { transform: translateX(10px); }
+#rdh .rdh-tile.drop-after { transform: translateX(-10px); }
+#rdh .rdh-link { position: absolute; inset: 0; display: block; color: inherit; text-decoration: none; border-radius: inherit; }
+#rdh .rdh-link:focus-visible { outline-offset: -3px; }
+#rdh .rdh-link img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .3s var(--ease), transform .5s var(--ease), filter .3s var(--ease); }
+#rdh .rdh-link img.is-in { opacity: 1; }
+#rdh .rdh-tile:hover .rdh-link img { transform: scale(1.04); filter: brightness(.82); }
+#rdh .rdh-ph {
+  display: grid; place-items: center; width: 100%; height: 100%;
+  background: linear-gradient(155deg, hsl(240 10% 15%), hsl(240 10% 7%));
+  color: hsl(240 8% 30%); font-size: 72px; font-weight: 700; letter-spacing: -0.03em;
+}
+#rdh .is-loading .rdh-ph {
+  color: transparent;
+  background: linear-gradient(100deg, hsl(240 8% 9%) 30%, hsl(240 8% 14%) 50%, hsl(240 8% 9%) 70%) 0 0 / 300% 100%;
+  animation: rdh-shimmer 1.4s linear infinite;
+}
+@keyframes rdh-shimmer { to { background-position: -150% 0; } }
+
+#rdh .rdh-play {
+  position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 56px; height: 56px;
+  border-radius: 50%; background: rgb(255 255 255 / .92); color: #000;
+  opacity: 0; transform: translate(-50%, -50%) scale(.85);
+  transition: opacity .2s var(--ease), transform .25s var(--ease);
+}
+#rdh .rdh-play .rdi { width: 24px; height: 24px; margin-left: 3px; fill: currentColor; }
+#rdh .rdh-tile:hover .rdh-play, #rdh .rdh-link:focus-visible .rdh-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+#rdh .rdh-cap {
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 2px;
+  padding: 48px 16px 14px; background: linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / .8));
+}
+#rdh .rdh-name { font-size: 17px; font-weight: 650; letter-spacing: -0.012em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#rdh .rdh-sort { color: rgb(255 255 255 / .74); font-size: 13px; }
+
+#rdh .rdh-tools {
+  position: absolute; top: 10px; right: 10px; display: flex; align-items: center; gap: 2px; padding: 3px;
+  background: rgb(10 10 14 / .72); backdrop-filter: blur(10px); border-radius: 11px;
+  opacity: 0; transform: translateY(-4px); transition: opacity .18s var(--ease), transform .18s var(--ease);
+}
+#rdh .rdh-tile:hover .rdh-tools, #rdh .rdh-tile:focus-within .rdh-tools { opacity: 1; transform: none; }
+#rdh .rdh-tool {
+  display: grid; place-items: center; width: 30px; height: 30px; border: 0; border-radius: 8px;
+  background: none; cursor: pointer; transition: background-color .15s var(--ease), color .15s var(--ease);
+}
+#rdh .rdh-tool .rdi { width: 18px; height: 18px; }
+#rdh .rdh-tool:hover { background: rgb(255 255 255 / .14); }
+#rdh .rdh-tool.is-danger:hover { color: var(--danger); }
+#rdh .rdh-move {
+  max-width: 140px; height: 30px; padding: 0 6px; border: 0; border-radius: 8px;
+  background: none; font-size: 13px; cursor: pointer;
+}
+#rdh .rdh-move:hover { background: rgb(255 255 255 / .14); }
+#rdh .rdh-move option { background: hsl(240 8% 10%); color: var(--text); }
+
+#rdh .rdh-empty { max-width: 500px; margin: 16vh auto 0; text-align: center; }
+#rdh .rdh-empty h2 { margin: 0 0 10px; font-size: 22px; font-weight: 650; letter-spacing: -0.015em; }
+#rdh .rdh-empty p { margin: 0; color: var(--muted); }
+#rdh .rdh-empty-mark {
+  display: inline-grid; place-items: center; width: 64px; height: 64px; margin-bottom: 20px;
+  border-radius: 18px; background: var(--surface); color: var(--accent);
+}
+#rdh .rdh-empty-mark .rdi { width: 30px; height: 30px; }
+
+#rdh .rdh-toast {
+  position: fixed; left: 50%; bottom: 28px; z-index: 3; display: flex; align-items: center; gap: 16px;
+  max-width: calc(100vw - 32px); padding: 12px 12px 12px 18px; border-radius: 12px;
+  background: var(--raised); box-shadow: 0 14px 36px rgb(0 0 0 / .55);
+  opacity: 0; transform: translate(-50%, 12px); pointer-events: none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+#rdh .rdh-toast.is-on { opacity: 1; transform: translateX(-50%); pointer-events: auto; }
+#rdh .rdh-toast button {
+  height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
+  background: none; color: var(--accent); font-weight: 650; cursor: pointer;
+}
+#rdh .rdh-toast button:hover { background: rgb(158 158 255 / .12); }
+
+@media (hover: none) {
+  #rdh .rdh-tools, #rdh .rdh-gtools { opacity: 1; transform: none; }
+}
+@media (max-width: 760px) {
+  #rdh .rdh-top { flex-wrap: wrap; gap: 12px 16px; padding: 14px 16px; }
+  #rdh .rdh-actions { margin-left: auto; gap: 4px; }
+  #rdh .rdh-tabs { order: 3; width: 100%; }
+  #rdh .rdh-tabs button { flex: 1; justify-content: center; }
+  #rdh .rdh-btn span { display: none; }
+  #rdh .rdh-btn { padding: 0 9px; }
+  #rdh .rdh-body { padding: 20px 16px 88px; }
+  #rdh .rdh-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  #rdh .rdh-name { font-size: 15px; }
+}
