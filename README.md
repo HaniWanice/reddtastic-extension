@@ -49,13 +49,14 @@ Open a subreddit or user page on reddtastic.com, or on reddit.com, then click **
 
 | Key | Action |
 |---|---|
+| Home or D | back to the start |
 | ← / → | previous / next |
 | Space | pause / play |
 | M | mute / unmute |
 | ↑ / ↓ | volume (also mouse wheel, or the slider when hovering the sound button) |
 | R | open the post on Reddit |
 | U | upscale small photos / actual size |
-| H | hide / show controls |
+| H | hide everything except a small eye button (top left) that shows it again |
 | S | add to / remove from favorites |
 | F | fullscreen |
 | Esc | close |

@@ -24,13 +24,14 @@ Sur reddit.com, en bas à gauche : **Favoris** et **Diaporama** (sous-reddit ou 
 
 | Touche | Action |
 |---|---|
+| Début ou d | revenir au début |
 | ← / → | précédent / suivant |
 | espace | pause / lecture |
 | m | son coupé / rétabli |
 | ↑ / ↓ | volume (aussi : molette ou curseur au survol du bouton son) |
 | r | voir le post sur Reddit |
 | u | petites photos agrandies / taille réelle |
-| h | masquer / afficher les contrôles (masqués : réapparaissent au survol) |
+| h | tout masquer sauf un petit œil en haut à gauche, qui réaffiche tout |
 | s | ajouter / retirer des favoris |
 | f | plein écran |
 | Échap | fermer |

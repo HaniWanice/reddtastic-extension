@@ -79,9 +79,16 @@
   border-radius: 16px; box-shadow: 0 10px 32px rgb(0 0 0 / .5);
   transition: opacity .2s var(--ease), transform .2s var(--ease);
 }
-/* Contrôles masqués : réapparaissent au survol de leur zone. */
-#rdp.rdp-hide .rdp-bar { opacity: 0; transform: translate(-50%, 8px); }
-#rdp.rdp-hide .rdp-bar:hover, #rdp.rdp-hide .rdp-bar:focus-within { opacity: 1; transform: translateX(-50%); }
+/* Contrôles masqués (h) : seul le petit œil en haut à gauche reste, pour les réafficher. */
+#rdp.rdp-hide .rdp-bar, #rdp.rdp-hide .rdp-info { display: none; }
+#rdp .rdp-show {
+  position: absolute; top: 12px; left: 12px; display: none; place-items: center; width: 32px; height: 32px;
+  border: 0; border-radius: 8px; background: rgb(18 18 22 / .6); color: var(--text); cursor: pointer;
+  opacity: .45; transition: opacity .15s var(--ease);
+}
+#rdp .rdp-show .rdi { width: 18px; height: 18px; }
+#rdp .rdp-show:hover, #rdp .rdp-show:focus-visible { opacity: 1; }
+#rdp.rdp-hide .rdp-show { display: grid; }
 #rdp .rdp-bar button {
   display: grid; place-items: center; width: 40px; height: 40px;
   border: 0; border-radius: 10px; background: none; color: var(--text); cursor: pointer;

@@ -151,6 +151,7 @@ function updateBar() {
 }
 
 const actions = {
+  first: () => go(0),
   prev: () => go(idx - 1),
   next: () => go(idx + 1),
   pause() {
@@ -173,6 +174,7 @@ const actions = {
     save();
     updateBar();
   },
+  show: () => actions.controls(),
   upscale() {
     s.upscale = !s.upscale;
     save();
@@ -187,7 +189,7 @@ const actions = {
   fs: () => (document.fullscreenElement ? document.exitFullscreen() : root.requestFullscreen()).catch(() => {}),
   close,
 };
-const KEYS = { ArrowLeft: 'prev', ArrowRight: 'next', ArrowUp: 'volUp', ArrowDown: 'volDown', ' ': 'pause', m: 'mute', r: 'reddit', h: 'controls', u: 'upscale', s: 'star', f: 'fs', Escape: 'close' };
+const KEYS = { Home: 'first', d: 'first', ArrowLeft: 'prev', ArrowRight: 'next', ArrowUp: 'volUp', ArrowDown: 'volDown', ' ': 'pause', m: 'mute', r: 'reddit', h: 'controls', u: 'upscale', s: 'star', f: 'fs', Escape: 'close' };
 
 function applyVolume() {
   const v = $('video');
@@ -233,7 +235,9 @@ async function open() {
       <div class="rdp-title"></div>
       <div class="rdp-count"></div>
     </div>
+    <button data-a="show" class="rdp-show" aria-label="Afficher les contrôles (h)" title="Afficher les contrôles (h)">${icon('eye')}</button>
     <div class="rdp-bar">
+      <button data-a="first" aria-label="Revenir au début (Début ou d)" title="Revenir au début (Début ou d)">${icon('first')}</button>
       <button data-a="prev" aria-label="Précédent (←)" title="Précédent (←)">${icon('prev')}</button>
       <button data-a="pause"></button>
       <button data-a="next" aria-label="Suivant (→)" title="Suivant (→)">${icon('next')}</button>

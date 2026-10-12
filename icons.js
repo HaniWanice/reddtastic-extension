@@ -2,6 +2,7 @@
 const ICON_PATHS = {
   play: '<path d="M7.5 4.8v14.4L19 12z" fill="currentColor"/>',
   pause: '<path d="M8.5 5v14M15.5 5v14"/>',
+  first: '<path d="M5 5v14M12.5 5.5 6.5 12l6 6.5zM19.5 5.5 13.5 12l6 6.5z"/>',
   prev: '<path d="M6 5v14M18 5.5 9 12l9 6.5z"/>',
   next: '<path d="M18 5v14M6 5.5 15 12l-9 6.5z"/>',
   muted: '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="m16 9.5 5 5m0-5-5 5"/>',
