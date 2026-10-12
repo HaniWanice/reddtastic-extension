@@ -19,21 +19,29 @@ function apiFor(loc, limit = 100) {
 function load() {
   if (done) return Promise.resolve();
   return loading ||= (async () => {
-    try {
-      const r = await fetch(api + (after ? `&after=${after}` : ''));
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const d = (await r.json()).data;
-      for (const { data: p } of d.children)
-        mediaOf(p).forEach((m, i, all) => items.push({ ...m, post: p, n: i + 1, of: all.length }));
-      after = d.after;
-      done = !after;
-    } catch (e) {
-      console.warn('[diaporama] chargement impossible', e);
-      loadError = e.message;
-      done = true;
-    } finally {
-      loading = null;
+    // L'API répond parfois 500 au hasard : deux nouvelles tentatives avant d'abandonner.
+    for (let n = 0; ; n++) {
+      try {
+        const r = await fetch(api + (after ? `&after=${after}` : ''));
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const d = (await r.json()).data;
+        for (const { data: p } of d.children)
+          mediaOf(p).forEach((m, i, all) => items.push({ ...m, post: p, n: i + 1, of: all.length }));
+        after = d.after;
+        done = !after;
+        break;
+      } catch (e) {
+        if (n < 2) {
+          await new Promise(ok => setTimeout(ok, 1500 * (n + 1)));
+          continue;
+        }
+        console.warn('[diaporama] chargement impossible', e);
+        loadError = e.message;
+        done = true;
+        break;
+      }
     }
+    loading = null;
   })();
 }
 
