@@ -108,7 +108,11 @@ function show() {
     const t0 = Date.now();
     // Attend la fin de la vidéo ; un clip plus court que la durée réglée est rejoué jusqu'à l'atteindre.
     el.onended = () => (Date.now() - t0 < s.duration * 1000 ? el.play() : go(idx + 1));
-    if (!paused) el.play().catch(() => { el.muted = true; el.play().catch(() => {}); });
+    if (!paused) el.play().catch(() => {
+      el.muted = true;
+      // Lecture auto bloquée même en muet (réglage du navigateur) : passe en pause, Lecture (clic ou espace) la lance.
+      el.play().catch(e => e.name === 'NotAllowedError' && items[idx] === it && ((paused = true), updateBar()));
+    });
   } else {
     el = new Image();
     el.alt = it.post.title;
