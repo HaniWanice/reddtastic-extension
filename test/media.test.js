@@ -26,6 +26,11 @@ assert.deepStrictEqual(
   mediaOf({ media_metadata: { a: { status: 'valid', e: 'Image', s: { u: 'A' } }, b: { status: 'valid', e: 'Image', s: { u: 'B' } } } })
     .map(m => m.src), ['A', 'B']);
 
+// lien RedGIFs : la copie vidéo de Reddit passe avant l'image d'aperçu
+assert.deepStrictEqual(
+  mediaOf({ url: 'https://www.redgifs.com/watch/x', preview: { images: [{ source: { url: 'P' }, variants: {} }], reddit_video_preview: { hls_url: 'h?a=1&amp;b=2', fallback_url: 'm.mp4' } } }),
+  [{ type: 'video', hls: 'h?a=1&b=2', mp4: 'm.mp4' }]);
+
 assert.deepStrictEqual(mediaOf({ url: 'https://i.imgur.com/x.gifv' }), [{ type: 'video', mp4: 'https://i.imgur.com/x.mp4' }]);
 
 assert.deepStrictEqual(

@@ -19,6 +19,10 @@ function mediaOf(p) {
   if (/\.gifv$/i.test(url)) return [{ type: 'video', mp4: url.replace(/\.gifv$/i, '.mp4') }];
   if (/\.(jpe?g|png|webp|gif)$/i.test(url)) return [{ type: 'image', src: url }];
 
+  // Lien externe (RedGIFs, Imgur…) : Reddit en garde une copie vidéo, sans laquelle seule l'image d'aperçu resterait.
+  const rvp = p.preview?.reddit_video_preview;
+  if (rvp) return [{ type: 'video', hls: dec(rvp.hls_url), mp4: dec(rvp.fallback_url) }];
+
   const img = p.preview?.images?.[0];
   const mp4 = img?.variants?.mp4?.source?.url;
   if (mp4) return [{ type: 'video', mp4: dec(mp4) }];
